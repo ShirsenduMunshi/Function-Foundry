@@ -1,103 +1,182 @@
-import Image from "next/image";
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { SiTheboringcompany } from "react-icons/si";
+import { Separator } from "@/components/ui/separator";
+import Navbar from "@/components/Navbar"; // Import the Navbar component
+import { Skeleton } from "@/components/ui/skeleton";
+import ApplyDialog from "@/components/ApplyDialog";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [jobs, setJobs] = useState([]);
+  const [userD, setUserD] = useState({});
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const logos = [
+    "/clogo1.png",
+    "/clogo2.png",
+    "/clogo3.png",
+    "/clogo4.png",
+    "/clogo5.webp",
+    "/clogo6.png",
+  ];
+
+  useEffect(() => {
+    // Check if the user is logged in
+    const authUser = localStorage.getItem("authToken");
+    if (authUser) {
+      const user = JSON.parse(authUser);
+      if (user?.token?.user?.email) {
+        setIsLoggedIn(true);
+      }
+      setUserD(user.token.user);
+    }
+
+    // Fetch jobs
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("/api/fetchjobs");
+        // console.log(response?.data?.allJobs);
+        console.log(response);
+        setJobs(response?.data?.allJobs);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  return (
+    <>
+      <Navbar isLoggedIn={isLoggedIn} />
+      <div className="p-4 hero-background w-full flex flex-col items-center justify-between">
+        {/* Hero Section */}
+        <div className="text-center max-w-3xl mt-20 h-[50svh] flex flex-col justify-center items-center">
+          <h1 className="text-5xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+            Welcome to Function Foundry
+          </h1>
+          <p className="mt-4 text-lg text-gray-300">
+            Where Talent Takes Shape – Find your dream job or hire top talent
+            today.
+          </p>
+          {isLoggedIn ? (
+            <div className="mt-6 flex gap-4 justify-center">
+              <Link href="/joblist">
+                <Button className="px-6 py-3">Find a Job</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="mt-6 flex gap-4 justify-center">
+              <Link href="/login">
+                <Button className="px-6 py-3">Login</Button>
+              </Link>
+              <Link href="signup">
+                <Button variant="outline" className="px-6 py-3">
+                  Sign up
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Scrolling Logos Section */}
+        <div className="w-full overflow-hidden py-2">
+          <motion.div
+            className="flex whitespace-nowrap items-center"
+            animate={{ x: [0, "-50%"] }}
+            transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
+          >
+            {[...logos, ...logos].map((logo, index) => (
+              <img
+                key={index}
+                src={logo}
+                alt={`logo-${index}`}
+                className="h-[200px] w-[200px] object-contain mx-4"
+              />
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="mt-12 mx-auto w-full max-w-5xl">
+        <h2 className="text-3xl font-semibold text-center mb-6">
+          Latest Job Listings
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {jobs.length > 0
+            ? jobs
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 6)
+                .map((job) => (
+                  <Card
+                    key={job?._id}
+                    className="p-4 shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <CardHeader className="flex items-center gap-4">
+                      {job.logo ? (
+                        <img
+                          src={job.logo}
+                          className="h-12 w-12 object-contain rounded-md"
+                          alt={`${job.company} logo`}
+                        />
+                      ) : (
+                        <SiTheboringcompany className="h-12 w-12 opacity-60" />
+                      )}
+                      <div>
+                        <CardTitle className="text-lg font-semibold">
+                          {job.title}
+                        </CardTitle>
+                        <Separator />
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-2">
+                      <p className="font-medium">{job.company}</p>
+                      <p className="text-sm opacity-80">
+                        Job Location: {job.location}
+                      </p>
+                      {isLoggedIn ? (
+                        <ApplyDialog
+                          jobId={job._id}
+                          userId={userD._id}
+                          userName={userD.name}
+                          userEmail={userD.email}
+                        />
+                      ) : (
+                        <Link href="/login">
+                          <Button className="w-full">Login to Apply</Button>
+                        </Link>
+                      )}
+                      <Link href={`/candidatedashboard/${job._id}`}>
+                          <Button variant="outline" className="w-full">View Details</Button>
+                        </Link>
+                    </CardContent>
+                  </Card>
+                ))
+            : // Skeleton loader for a better UI experience
+              [...Array(3)].map((_, index) => (
+                <Card key={index} className="p-4 shadow-lg">
+                  <CardHeader className="flex items-center gap-4">
+                    <Skeleton className="h-12 w-12 rounded-md" />
+                    <div className="flex-1">
+                      <Skeleton className="h-5 w-3/4 mb-1" />
+                      <Separator />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <Skeleton className="h-4 w-1/2" />
+                    <Skeleton className="h-4 w-1/3" />
+                    <Skeleton className="h-10 w-full rounded-md" />
+                  </CardContent>
+                </Card>
+              ))}
+        </div>
+      </div>
+    </>
   );
 }
