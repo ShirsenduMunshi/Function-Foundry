@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Job Portal Application 🚀
 
-## Getting Started
+A full-stack job board platform built with Next.js, MongoDB, and shadcn/ui. Connects job seekers with employers through an intuitive, feature-rich interface.
 
-First, run the development server:
+![Job Portal Screenshot](/screenshot.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### For Job Seekers
+- **Smart Job Matching** - AI-powered recommendations based on skills  
+- **One-Click Applications** - Resume parsing & quick-apply system  
+- **Application Tracking** - Status updates (Pending/Reviewed/Accepted)  
+- **Profile Management** - Skills, bio, and portfolio showcase  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### For Employers
+- **Job Posting Dashboard** - Create and manage listings  
+- **Candidate Screening** - Filter applications by skills/experience  
+- **Analytics** - Track post performance and engagement  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Technology Stack
 
-## Learn More
+### Frontend
+- **Next.js 14** (App Router)  
+- **shadcn/ui** - Beautiful, accessible components  
+- **React Hook Form** - Form validation & management  
+- **Sonner** - Toast notifications  
+- **Lucide Icons** - Crisp iconography  
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
+- **Node.js & Express** - API routes  
+- **MongoDB** - Database (Mongoose ODM)  
+- **Web3Forms** - Contact form handling  
+- **Cloudinary** - Resume/Image storage  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### DevOps
+- **GitHub Actions** - CI/CD pipeline  
+- **Vercel** - Hosting & deployments  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Getting Started
 
-## Deploy on Vercel
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/ShirsenduMunshi/job-portal-app.git
+   ```
+2. **Install dependencies**
+    ```bash
+    npm install    
+    ```
+3. **Set up environment variables**
+    - Create .env.local with:
+    ```bash
+    MONGODB_URI=your_mongodb_connection_string
+    WEB3FORMS_ACCESS_KEY=your_web3forms_key
+    ```
+4. **Run the development server**
+    ```bash
+    npm run dev
+    ```
+## 🤝 Acknowledgments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project was developed with AI-powered guidance from GitHub Copilot & ChatGPT, which assisted with:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Architecture Design** - File structure and component organization.
+- **Code Optimization** - Performance best practices.
+- **Bug Resolution** -  Debugging complex issues.
+- **Documentation** - README and inline comments.
+
+Special thanks to [Shirsendu Munshi](/https://www.github.com/ShirsenduMunshi?tab=repositories) for bringing this vision to life through persistent iteration and problem-solving.
+#
+## 📧 Contact: [shirsendumunshi4@gmail.com](shirsendumunshi4@gmail.com)
+#
+## 🔗 Portfolio: [shirsendu4.netlify.app](shirsendu4.netlify.app)
